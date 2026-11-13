@@ -45,7 +45,7 @@ Para probar el CMS sin GitHub: descomenta `local_backend: true` en `public/admin
    - Cada push a `main` vuelve a publicar la web.
 3. **Dominio**: comprarlo (en Cloudflare o donde se prefiera) y añadirlo en el Worker → Settings → Domains & Routes.
 4. **Correo**: Cloudflare Email Routing para tener `info@dominio` reenviando al Gmail de la peña.
-5. **Formularios**: crear cuenta gratis en [Resend](https://resend.com), verificar el dominio y añadir en el Worker (Settings → Variables and secrets) las variables `RESEND_API_KEY`, `MAIL_TO` (buzón que recibe) y `MAIL_FROM` (p. ej. `Web de la peña <web@dominio>`). Hasta entonces el formulario responde que aún no está activo.
+5. **Formularios**: crear cuenta gratis en [Resend](https://resend.com), verificar el dominio y añadir en el Worker (Settings → Variables and secrets) las variables `RESEND_API_KEY`, `MAIL_TO` (buzón que recibe: `penabeticafielesalbalompie@gmail.com`) y `MAIL_FROM` (p. ej. `Web de la peña <web@dominio>`). Hasta entonces el formulario responde que aún no está activo.
 6. **Editores**: en GitHub → Settings → Developer settings → OAuth Apps → New:
    - Homepage URL: la de la web. Callback URL: `https://<dominio>/api/callback`.
    - Copiar Client ID y Client secret al Worker como `GITHUB_CLIENT_ID` y `GITHUB_CLIENT_SECRET`.
