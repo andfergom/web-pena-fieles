@@ -1,9 +1,9 @@
 {
   "nombre": "Peña Bética Fieles al Balompié",
   "nombreLegal": "Asociación Peña Bética Fieles al Balompié",
-  "lema": "Peña bética de La Rinconada (Sevilla)",
+  "lema": "Peña bética nacida en Pino Montano (Sevilla)",
   "fundacion": "2025-09-14",
-  "localidad": "La Rinconada (Sevilla)",
+  "barrio": "Pino Montano (Sevilla)",
   "domicilioSocial": "C/ María Cegarra Salcedo 16, 41309 La Rinconada (Sevilla)",
   "nif": "",
   "registro": "Registro de Asociaciones de Andalucía, n.º 41-1-21976 (Sección 1.ª, Unidad Registral de Sevilla)",
@@ -18,9 +18,21 @@
     "Realizar acciones sociales, culturales y deportivas que contribuyan al desarrollo de la comunidad y a la difusión de la imagen del Real Betis Balompié."
   ],
   "junta": [
-    { "cargo": "Presidente", "nombre": "Andrés Fernández Gómez" },
-    { "cargo": "Vicepresidente", "nombre": "Juan Manuel Robledo García" },
-    { "cargo": "Secretario", "nombre": "Javier Brenes Reyes" },
-    { "cargo": "Tesorero", "nombre": "Norberto Baena Romero" }
+    {
+      "cargo": "Presidente",
+      "nombre": "Andrés Fernández Gómez"
+    },
+    {
+      "cargo": "Vicepresidente",
+      "nombre": "Juan Manuel Robledo García"
+    },
+    {
+      "cargo": "Secretario",
+      "nombre": "Javier Brenes Reyes"
+    },
+    {
+      "cargo": "Tesorero",
+      "nombre": "Norberto Baena Romero"
+    }
   ]
 }

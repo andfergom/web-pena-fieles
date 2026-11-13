@@ -67,8 +67,8 @@ collections:
           - { label: Nombre legal, name: nombreLegal, widget: string }
           - { label: Lema, name: lema, widget: string }
           - { label: Fecha de fundación, name: fundacion, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
-          - { label: Localidad, name: localidad, widget: string }
-          - { label: Domicilio social, name: domicilioSocial, widget: string }
+          - { label: Barrio, name: barrio, widget: string, hint: "Barrio de origen de la peña (no es el domicilio social)" }
+          - { label: Domicilio social, name: domicilioSocial, widget: string, hint: "Domicilio oficial inscrito en el Registro; solo aparece en los textos legales" }
           - { label: NIF, name: nif, widget: string, required: false, hint: "Déjalo vacío hasta que Hacienda lo asigne" }
           - { label: Registro, name: registro, widget: string }
           - { label: Correo de contacto, name: email, widget: string, required: false }
