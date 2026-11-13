@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 // Cambia SITE_URL cuando tengamos dominio propio (p. ej. https://fielesalbalompie.es)
-const site = process.env.SITE_URL ?? 'https://fieles-al-balompie.pages.dev';
+const site = process.env.SITE_URL ?? 'https://web-pena-fieles.andresfernandezgomez.workers.dev';
 
 export default defineConfig({
   site,
