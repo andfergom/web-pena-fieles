@@ -1,0 +1,69 @@
+---
+interface Props {
+  tipo: 'contacto' | 'socio';
+  boton: string;
+}
+const { tipo, boton } = Astro.props;
+const campo = 'mt-1 w-full rounded-lg border border-tinta/20 bg-white px-3 py-2.5 focus:border-verde focus:ring-2 focus:ring-verde/30 outline-none';
+---
+<form method="post" action="/api/contacto" class="formulario grid gap-5" data-tipo={tipo}>
+  <input type="hidden" name="tipo" value={tipo} />
+  <div class="hidden" aria-hidden="true">
+    <label>No rellenar <input type="text" name="web" tabindex="-1" autocomplete="off" /></label>
+  </div>
+  <div class="grid gap-5 sm:grid-cols-2">
+    <label class="font-semibold">Nombre y apellidos
+      <input class={campo} type="text" name="nombre" required maxlength="120" autocomplete="name" />
+    </label>
+    <label class="font-semibold">Correo electrónico
+      <input class={campo} type="email" name="email" required maxlength="160" autocomplete="email" />
+    </label>
+  </div>
+  {tipo === 'socio' && (
+    <div class="grid gap-5 sm:grid-cols-2">
+      <label class="font-semibold">Teléfono
+        <input class={campo} type="tel" name="telefono" required maxlength="20" autocomplete="tel" />
+      </label>
+      <label class="font-semibold">Localidad
+        <input class={campo} type="text" name="localidad" maxlength="80" autocomplete="address-level2" />
+      </label>
+    </div>
+  )}
+  <label class="font-semibold">{tipo === 'socio' ? 'Algo que quieras contarnos (opcional)' : 'Mensaje'}
+    <textarea class={campo} name="mensaje" rows="5" maxlength="3000" required={tipo === 'contacto'}></textarea>
+  </label>
+  <label class="flex items-start gap-3 text-sm">
+    <input type="checkbox" name="privacidad" required class="mt-1 h-4 w-4 accent-verde" />
+    <span>He leído la <a href="/privacidad" class="underline">política de privacidad</a> y acepto que la peña use estos datos para responderme{tipo === 'socio' ? ' y tramitar mi alta' : ''}.</span>
+  </label>
+  <div class="flex items-center gap-4">
+    <button type="submit" class="rounded-full bg-verde px-6 py-3 font-semibold text-white hover:bg-verde-oscuro disabled:opacity-60">{boton}</button>
+    <p class="estado text-sm" role="status" aria-live="polite"></p>
+  </div>
+</form>
+
+<script>
+  for (const form of document.querySelectorAll<HTMLFormElement>('form.formulario')) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const estado = form.querySelector<HTMLElement>('.estado')!;
+      const boton = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+      boton.disabled = true;
+      estado.className = 'estado text-sm text-tinta/70';
+      estado.textContent = 'Enviando…';
+      try {
+        const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.error || 'No se pudo enviar.');
+        form.reset();
+        estado.className = 'estado text-sm text-verde font-semibold';
+        estado.textContent = '¡Recibido! Te contestaremos pronto.';
+      } catch (err) {
+        estado.className = 'estado text-sm text-red-700 font-semibold';
+        estado.textContent = err instanceof Error ? err.message : 'No se pudo enviar.';
+      } finally {
+        boton.disabled = false;
+      }
+    });
+  }
+</script>

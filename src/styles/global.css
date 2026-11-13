@@ -1,0 +1,40 @@
+@import "tailwindcss";
+@import "@fontsource/im-fell-english-sc/400.css";
+@import "@fontsource-variable/source-sans-3/wght.css";
+
+@theme {
+  --color-verde: #027824;
+  --color-verde-oscuro: #014d17;
+  --color-verde-claro: #e6f2e9;
+  --color-oro: #d9a934;
+  --color-oro-oscuro: #8a6a14;
+  --color-crema: #fbf8f0;
+  --color-tinta: #1b241d;
+  --font-titulo: "IM Fell English SC", Georgia, serif;
+  --font-sans: "Source Sans 3 Variable", system-ui, sans-serif;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply bg-crema text-tinta font-sans antialiased; }
+  h1, h2, h3 { @apply font-titulo text-verde-oscuro; letter-spacing: 0.01em; }
+  a { @apply text-verde underline-offset-2; }
+  a:hover { @apply text-verde-oscuro; }
+  :focus-visible { outline: 3px solid var(--color-oro); outline-offset: 2px; }
+}
+
+@utility rayas {
+  background: repeating-linear-gradient(90deg, var(--color-verde) 0 28px, #fff 28px 56px);
+}
+
+@utility prosa {
+  @apply max-w-none leading-relaxed text-lg;
+  & p { @apply my-4; }
+  & h2 { @apply text-2xl mt-10 mb-3; }
+  & h3 { @apply text-xl mt-8 mb-2; }
+  & ul { @apply list-disc pl-6 my-4 space-y-1; }
+  & ol { @apply list-decimal pl-6 my-4 space-y-1; }
+  & a { @apply underline; }
+  & strong { @apply font-semibold; }
+  & img { @apply rounded-lg my-6; }
+}

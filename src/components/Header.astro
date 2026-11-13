@@ -1,0 +1,50 @@
+---
+import { nav } from '../data/nav';
+import pena from '../data/pena.json';
+
+const actual = Astro.url.pathname.replace(/\/$/, '') || '/';
+const activo = (href: string) => (href === '/' ? actual === '/' : actual.startsWith(href));
+---
+<header class="bg-white/95 backdrop-blur border-b border-verde/15 sticky top-0 z-40">
+  <div class="rayas h-1.5" aria-hidden="true"></div>
+  <div class="mx-auto max-w-6xl px-4 flex items-center justify-between gap-4 h-16 md:h-20">
+    <a href="/" class="flex items-center gap-3 no-underline text-verde-oscuro">
+      <img src="/escudo.svg" alt="" width="56" height="56" class="w-11 h-11 md:w-14 md:h-14" />
+      <span class="font-titulo text-lg md:text-xl leading-tight">
+        Peña Bética<br class="md:hidden" /><span class="hidden md:inline"> </span>Fieles al Balompié
+      </span>
+    </a>
+
+    <nav aria-label="Principal" class="hidden md:flex items-center gap-1">
+      {nav.map((item) => (
+        <a
+          href={item.href}
+          aria-current={activo(item.href) ? 'page' : undefined}
+          class:list={[
+            'px-3 py-2 rounded-md font-semibold no-underline transition-colors',
+            activo(item.href) ? 'text-verde-oscuro bg-verde-claro' : 'text-tinta/80 hover:text-verde hover:bg-verde-claro/60',
+          ]}
+        >{item.label}</a>
+      ))}
+      <a href="/hazte-socio" class="ml-2 px-4 py-2 rounded-full bg-verde text-white font-semibold no-underline hover:bg-verde-oscuro hover:text-white">Hazte socio</a>
+    </nav>
+
+    <details class="md:hidden relative group">
+      <summary class="list-none cursor-pointer p-2 rounded-md text-verde-oscuro" aria-label="Abrir menú">
+        <svg class="w-7 h-7 group-open:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        <svg class="w-7 h-7 hidden group-open:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+      </summary>
+      <nav aria-label="Principal móvil" class="absolute right-0 mt-2 w-60 rounded-xl bg-white shadow-lg ring-1 ring-verde/15 p-2 flex flex-col">
+        {nav.map((item) => (
+          <a
+            href={item.href}
+            aria-current={activo(item.href) ? 'page' : undefined}
+            class:list={['px-3 py-2.5 rounded-md font-semibold no-underline', activo(item.href) ? 'bg-verde-claro text-verde-oscuro' : 'text-tinta']}
+          >{item.label}</a>
+        ))}
+        <a href="/hazte-socio" class="mt-1 px-3 py-2.5 rounded-md bg-verde text-white font-semibold no-underline text-center">Hazte socio</a>
+      </nav>
+    </details>
+  </div>
+  <span class="sr-only">{pena.nombre}</span>
+</header>

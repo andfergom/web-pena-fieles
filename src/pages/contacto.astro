@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import FormularioContacto from '../components/FormularioContacto.astro';
+import pena from '../data/pena.json';
+---
+<Base title="Contacto" description="Contacta con la Peña Bética Fieles al Balompié.">
+  <PageHeader title="Contacto" intro="¿Dudas, propuestas o quieres colaborar con la peña? Escríbenos." />
+  <section class="mx-auto max-w-6xl px-4 py-14 grid gap-12 md:grid-cols-[1fr_1.2fr]">
+    <div class="space-y-6">
+      <div>
+        <h2 class="text-2xl">Dónde estamos</h2>
+        <p class="mt-2 text-lg">{pena.localidad}</p>
+      </div>
+      {pena.email && (
+        <div>
+          <h2 class="text-2xl">Correo</h2>
+          <p class="mt-2 text-lg"><a href={`mailto:${pena.email}`}>{pena.email}</a></p>
+        </div>
+      )}
+      {pena.redes.length > 0 && (
+        <div>
+          <h2 class="text-2xl">Redes sociales</h2>
+          <ul class="mt-2 space-y-1">
+            {pena.redes.map((r: { nombre: string; url: string }) => <li><a href={r.url} rel="me noopener">{r.nombre}</a></li>)}
+          </ul>
+        </div>
+      )}
+    </div>
+    <div class="rounded-2xl bg-white p-6 md:p-8 shadow-sm ring-1 ring-verde/10">
+      <h2 class="text-2xl mb-6">Escríbenos</h2>
+      <FormularioContacto tipo="contacto" boton="Enviar mensaje" />
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,33 @@
+---
+import Legal from '../layouts/Legal.astro';
+import pena from '../data/pena.json';
+---
+<Legal title="Política de privacidad" actualizado="13 de noviembre de 2026">
+  <p>Esta política explica cómo trata la peña los datos personales que nos facilitas a través de esta web, conforme al Reglamento (UE) 2016/679 (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD).</p>
+
+  <h2>Responsable del tratamiento</h2>
+  <p>{pena.nombreLegal}{pena.nif ? `, NIF ${pena.nif}` : ''}, con domicilio social en {pena.domicilioSocial}. Puedes contactar con nosotros mediante el <a href="/contacto">formulario de contacto</a>{pena.email ? <> o en <a href={`mailto:${pena.email}`}>{pena.email}</a></> : ''}.</p>
+
+  <h2>Qué datos tratamos y para qué</h2>
+  <ul>
+    <li><strong>Formulario de contacto:</strong> nombre, correo electrónico y mensaje, para responder a tu consulta.</li>
+    <li><strong>Solicitud de socio:</strong> nombre, correo, teléfono y localidad, para contactar contigo y tramitar tu alta. Los datos necesarios para el libro de socios (como el DNI) se recogen en persona, nunca a través de la web.</li>
+  </ul>
+
+  <h2>Base legal</h2>
+  <p>Tu consentimiento, que das al marcar la casilla del formulario, y, en el caso de los socios, la relación asociativa que se crea al darte de alta.</p>
+
+  <h2>Cuánto tiempo los guardamos</h2>
+  <p>Los mensajes de contacto, el tiempo necesario para atender tu consulta y como máximo un año. Los datos de las solicitudes de socio que no lleguen a completarse se borran a los seis meses. Los datos de los socios se conservan mientras dure su condición de socio y, después, el tiempo que exija la ley.</p>
+
+  <h2>Quién más accede a los datos</h2>
+  <p>No cedemos tus datos a terceros salvo obligación legal. Para que la web funcione usamos proveedores que actúan como encargados del tratamiento, con las garantías del RGPD:</p>
+  <ul>
+    <li><strong>Cloudflare</strong>, que aloja la web y procesa el envío de los formularios.</li>
+    <li>El proveedor de correo electrónico que entrega los formularios al buzón de la peña.</li>
+  </ul>
+  <p>Algunos de estos proveedores pueden tratar datos fuera del Espacio Económico Europeo, siempre con cláusulas contractuales tipo de la Comisión Europea u otras garantías adecuadas.</p>
+
+  <h2>Tus derechos</h2>
+  <p>Puedes pedirnos acceso, rectificación, supresión, oposición, limitación y portabilidad de tus datos, y retirar tu consentimiento en cualquier momento, escribiéndonos por el <a href="/contacto">formulario de contacto</a>. Si crees que no hemos atendido bien tu petición, puedes reclamar ante la <a href="https://www.aepd.es" rel="noopener">Agencia Española de Protección de Datos</a>.</p>
+</Legal>

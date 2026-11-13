@@ -1,0 +1,13 @@
+---
+import Base from './Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+interface Props { title: string; actualizado: string }
+const { title, actualizado } = Astro.props;
+---
+<Base title={title}>
+  <PageHeader title={title} />
+  <article class="mx-auto max-w-3xl px-4 py-14 prosa">
+    <p class="text-base text-tinta/60">Última actualización: {actualizado}</p>
+    <slot />
+  </article>
+</Base>

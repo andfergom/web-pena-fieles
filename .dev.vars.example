@@ -1,0 +1,6 @@
+# Copia este archivo como .dev.vars para probar las funciones en local (npm run preview).
+RESEND_API_KEY=
+MAIL_TO=
+MAIL_FROM=
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=

@@ -1,0 +1,38 @@
+---
+import pena from '../data/pena.json';
+import { nav } from '../data/nav';
+const anio = new Date().getFullYear();
+---
+<footer class="bg-verde-oscuro text-white/85 mt-16">
+  <div class="rayas h-1.5 opacity-90" aria-hidden="true"></div>
+  <div class="mx-auto max-w-6xl px-4 py-12 grid gap-10 md:grid-cols-3">
+    <div class="flex items-start gap-4">
+      <img src="/escudo.svg" alt="" width="72" height="72" class="w-18 h-18 shrink-0" />
+      <div>
+        <p class="font-titulo text-xl text-white">{pena.nombre}</p>
+        <p class="mt-1">{pena.lema}</p>
+        <p class="mt-3 text-sm text-white/70">Inscrita en el {pena.registro}.</p>
+      </div>
+    </div>
+    <nav aria-label="Pie de página">
+      <p class="font-semibold text-oro mb-3">La web</p>
+      <ul class="space-y-1.5">
+        {nav.map((item) => <li><a href={item.href} class="text-white/85 hover:text-white no-underline">{item.label}</a></li>)}
+        <li><a href="/hazte-socio" class="text-white/85 hover:text-white no-underline">Hazte socio</a></li>
+      </ul>
+    </nav>
+    <div>
+      <p class="font-semibold text-oro mb-3">Información legal</p>
+      <ul class="space-y-1.5">
+        <li><a href="/aviso-legal" class="text-white/85 hover:text-white no-underline">Aviso legal</a></li>
+        <li><a href="/privacidad" class="text-white/85 hover:text-white no-underline">Política de privacidad</a></li>
+        <li><a href="/cookies" class="text-white/85 hover:text-white no-underline">Política de cookies</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <p class="mx-auto max-w-6xl px-4 py-5 text-sm text-white/60">
+      © {anio} {pena.nombreLegal}. Web de una peña de aficionados; el nombre y el escudo del Real Betis Balompié son marcas de su titular.
+    </p>
+  </div>
+</footer>

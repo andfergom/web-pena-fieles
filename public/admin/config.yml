@@ -1,0 +1,89 @@
+# Configuración del gestor de contenidos (Decap CMS).
+# Cambia "repo" por el repositorio real de GitHub antes de publicar.
+backend:
+  name: github
+  repo: andfergom/web-pena-fieles
+  branch: main
+  base_url: /
+  auth_endpoint: api/auth
+  commit_messages:
+    create: "Contenido: crea {{collection}} «{{slug}}»"
+    update: "Contenido: actualiza {{collection}} «{{slug}}»"
+    delete: "Contenido: borra {{collection}} «{{slug}}»"
+    uploadMedia: "Contenido: sube {{path}}"
+    deleteMedia: "Contenido: borra {{path}}"
+
+# Para probar en local: `npm run cms` en otra terminal y descomenta la línea siguiente.
+# local_backend: true
+
+locale: es
+site_url: /
+display_url: /
+logo_url: /escudo.svg
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  - name: noticias
+    label: Noticias
+    label_singular: Noticia
+    folder: src/content/noticias
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{fecha | date('DD/MM/YYYY')}} · {{titulo}}"
+    sortable_fields: [fecha, titulo]
+    fields:
+      - { label: Título, name: titulo, widget: string }
+      - { label: Fecha, name: fecha, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
+      - { label: Resumen (una o dos frases), name: resumen, widget: text }
+      - { label: Imagen principal, name: imagen, widget: image, required: false }
+      - { label: Borrador (no se publica), name: borrador, widget: boolean, default: false, required: false }
+      - { label: Texto, name: body, widget: markdown }
+
+  - name: eventos
+    label: Eventos
+    label_singular: Evento
+    folder: src/content/eventos
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{fecha | date('DD/MM/YYYY HH:mm')}} · {{titulo}}"
+    sortable_fields: [fecha, titulo]
+    fields:
+      - { label: Título, name: titulo, widget: string }
+      - { label: Fecha y hora, name: fecha, widget: datetime, format: "YYYY-MM-DDTHH:mm:ssZ", date_format: "DD/MM/YYYY", time_format: "HH:mm" }
+      - { label: Lugar, name: lugar, widget: string }
+      - { label: Resumen, name: resumen, widget: text }
+      - { label: Borrador (no se publica), name: borrador, widget: boolean, default: false, required: false }
+      - { label: Más detalles, name: body, widget: markdown, required: false }
+
+  - name: ajustes
+    label: Datos de la peña
+    files:
+      - name: pena
+        label: Datos generales y junta directiva
+        file: src/data/pena.json
+        fields:
+          - { label: Nombre, name: nombre, widget: string }
+          - { label: Nombre legal, name: nombreLegal, widget: string }
+          - { label: Lema, name: lema, widget: string }
+          - { label: Fecha de fundación, name: fundacion, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
+          - { label: Localidad, name: localidad, widget: string }
+          - { label: Domicilio social, name: domicilioSocial, widget: string }
+          - { label: NIF, name: nif, widget: string, required: false, hint: "Déjalo vacío hasta que Hacienda lo asigne" }
+          - { label: Registro, name: registro, widget: string }
+          - { label: Correo de contacto, name: email, widget: string, required: false }
+          - { label: Cuota de socio, name: cuotaSocio, widget: string, required: false, hint: "Ej.: 20 € al año" }
+          - label: Redes sociales
+            name: redes
+            widget: list
+            required: false
+            fields:
+              - { label: Nombre, name: nombre, widget: string }
+              - { label: Enlace, name: url, widget: string }
+          - { label: Fines, name: fines, widget: list, field: { label: Fin, name: fin, widget: text } }
+          - label: Junta directiva
+            name: junta
+            widget: list
+            fields:
+              - { label: Cargo, name: cargo, widget: string }
+              - { label: Nombre, name: nombre, widget: string }

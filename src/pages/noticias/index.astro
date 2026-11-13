@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { fechaLarga } from '../../lib/fechas';
+
+const noticias = (await getCollection('noticias', ({ data }) => !data.borrador))
+  .sort((a, b) => b.data.fecha.valueOf() - a.data.fecha.valueOf());
+---
+<Base title="Noticias" description="Noticias y novedades de la Peña Bética Fieles al Balompié.">
+  <PageHeader title="Noticias" intro="Lo que pasa en la peña." />
+  <section class="mx-auto max-w-3xl px-4 py-14">
+    <ul class="divide-y divide-verde/10">
+      {noticias.map((n) => (
+        <li class="py-6 first:pt-0">
+          <a href={`/noticias/${n.id}`} class="group block no-underline">
+            <p class="text-sm text-tinta/60">{fechaLarga(n.data.fecha)}</p>
+            <h2 class="mt-1 text-2xl group-hover:text-verde">{n.data.titulo}</h2>
+            <p class="mt-1 text-tinta/80">{n.data.resumen}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>

@@ -1,0 +1,103 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import pena from '../data/pena.json';
+import { fechaLarga, fechaEvento } from '../lib/fechas';
+
+const noticias = (await getCollection('noticias', ({ data }) => !data.borrador))
+  .sort((a, b) => b.data.fecha.valueOf() - a.data.fecha.valueOf())
+  .slice(0, 3);
+const ahora = Date.now();
+const eventos = (await getCollection('eventos', ({ data }) => !data.borrador && data.fecha.valueOf() >= ahora))
+  .sort((a, b) => a.data.fecha.valueOf() - b.data.fecha.valueOf())
+  .slice(0, 3);
+const pilares = [
+  { titulo: 'Beticismo', texto: pena.fines[0] },
+  { titulo: 'Partidos y viajes', texto: pena.fines[1] },
+  { titulo: 'Convivencia', texto: pena.fines[2] },
+];
+---
+<Base>
+  <section class="relative overflow-hidden bg-verde text-white">
+    <div class="absolute inset-0 opacity-[0.07] rayas" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-6xl px-4 py-14 md:py-24 grid gap-10 md:grid-cols-[1.2fr_1fr] items-center">
+      <div>
+        <p class="font-semibold uppercase tracking-[0.2em] text-oro text-sm">{pena.lema}</p>
+        <h1 class="mt-3 text-5xl md:text-7xl text-white leading-[1.05]">Fieles al Balompié</h1>
+        <p class="mt-5 max-w-xl text-lg md:text-xl text-white/90">
+          Una peña para vivir el Betis en compañía: ver los partidos juntos, organizar viajes y hacer barrio. Aquí se dice balompié.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/hazte-socio" class="rounded-full bg-oro px-6 py-3 font-semibold text-verde-oscuro no-underline hover:bg-white hover:text-verde-oscuro">Hazte socio</a>
+          <a href="/la-pena" class="rounded-full border-2 border-white/70 px-6 py-3 font-semibold text-white no-underline hover:bg-white hover:text-verde-oscuro">Conoce la peña</a>
+        </div>
+      </div>
+      <img src="/escudo.svg" alt="Escudo de la Peña Bética Fieles al Balompié" width="420" height="420" class="mx-auto w-64 md:w-full max-w-md drop-shadow-xl" />
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16">
+    <h2 class="text-3xl md:text-4xl text-center">Lo que nos mueve</h2>
+    <div class="mt-10 grid gap-6 md:grid-cols-3">
+      {pilares.map((p) => (
+        <article class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-verde/10 border-t-4 border-oro">
+          <h3 class="text-2xl">{p.titulo}</h3>
+          <p class="mt-2 text-tinta/80">{p.texto}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-white border-y border-verde/10">
+    <div class="mx-auto max-w-6xl px-4 py-16 grid gap-12 md:grid-cols-2">
+      <div>
+        <div class="flex items-baseline justify-between">
+          <h2 class="text-3xl">Noticias</h2>
+          <a href="/noticias" class="font-semibold">Ver todas</a>
+        </div>
+        <ul class="mt-6 space-y-6">
+          {noticias.map((n) => (
+            <li>
+              <a href={`/noticias/${n.id}`} class="group block no-underline">
+                <p class="text-sm text-tinta/60">{fechaLarga(n.data.fecha)}</p>
+                <p class="mt-1 text-xl font-semibold text-tinta group-hover:text-verde">{n.data.titulo}</p>
+                <p class="mt-1 text-tinta/75">{n.data.resumen}</p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <div class="flex items-baseline justify-between">
+          <h2 class="text-3xl">Próximos eventos</h2>
+          <a href="/eventos" class="font-semibold">Ver agenda</a>
+        </div>
+        {eventos.length > 0 ? (
+          <ul class="mt-6 space-y-4">
+            {eventos.map((e) => (
+              <li class="rounded-xl bg-verde-claro p-4">
+                <p class="text-sm font-semibold text-verde-oscuro capitalize">{fechaEvento(e.data.fecha)}</p>
+                <p class="mt-1 text-lg font-semibold">{e.data.titulo}</p>
+                <p class="text-tinta/75">{e.data.lugar}</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="mt-6 rounded-xl bg-verde-claro p-5 text-tinta/80">
+            Estamos preparando la agenda de la temporada. Muy pronto anunciaremos aquí las quedadas para ver los partidos y los primeros viajes.
+          </p>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16">
+    <div class="rounded-3xl bg-verde-oscuro text-white p-8 md:p-12 grid gap-6 md:grid-cols-[1fr_auto] items-center">
+      <div>
+        <h2 class="text-3xl md:text-4xl text-white">¿Eres bético? Esta es tu peña</h2>
+        <p class="mt-2 text-white/85 text-lg">Déjanos tus datos y te contamos cómo hacerte socio.</p>
+      </div>
+      <a href="/hazte-socio" class="justify-self-start rounded-full bg-oro px-6 py-3 font-semibold text-verde-oscuro no-underline hover:bg-white hover:text-verde-oscuro">Quiero ser socio</a>
+    </div>
+  </section>
+</Base>

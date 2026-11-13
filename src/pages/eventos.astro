@@ -1,0 +1,46 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { fechaEvento, fechaLarga } from '../lib/fechas';
+
+const todos = await getCollection('eventos', ({ data }) => !data.borrador);
+const ahora = Date.now();
+const proximos = todos.filter((e) => e.data.fecha.valueOf() >= ahora).sort((a, b) => a.data.fecha.valueOf() - b.data.fecha.valueOf());
+const pasados = todos.filter((e) => e.data.fecha.valueOf() < ahora).sort((a, b) => b.data.fecha.valueOf() - a.data.fecha.valueOf());
+const conContenido = await Promise.all(proximos.map(async (e) => ({ e, Content: (await render(e)).Content })));
+---
+<Base title="Eventos" description="Agenda de la Peña Bética Fieles al Balompié: partidos, viajes y actividades.">
+  <PageHeader title="Eventos" intro="Partidos que vemos juntos, viajes y actividades de la peña." />
+  <section class="mx-auto max-w-3xl px-4 py-14">
+    <h2 class="text-3xl">Próximos</h2>
+    {conContenido.length === 0 && (
+      <p class="mt-4 rounded-xl bg-verde-claro p-5">Estamos preparando la agenda. Vuelve pronto o síguenos en nuestras novedades.</p>
+    )}
+    <ul class="mt-6 space-y-6">
+      {conContenido.map(({ e, Content }) => (
+        <li class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-verde/10 border-l-4 border-verde">
+          <p class="text-sm font-semibold text-verde-oscuro capitalize">{fechaEvento(e.data.fecha)}</p>
+          <h3 class="mt-1 text-2xl">{e.data.titulo}</h3>
+          <p class="text-tinta/70">{e.data.lugar}</p>
+          <p class="mt-2">{e.data.resumen}</p>
+          <div class="prosa text-base"><Content /></div>
+        </li>
+      ))}
+    </ul>
+
+    {pasados.length > 0 && (
+      <>
+        <h2 class="mt-14 text-3xl">Ya celebrados</h2>
+        <ul class="mt-4 divide-y divide-verde/10">
+          {pasados.map((e) => (
+            <li class="py-3 flex flex-wrap gap-x-4">
+              <span class="text-tinta/60 w-40">{fechaLarga(e.data.fecha)}</span>
+              <span class="font-semibold">{e.data.titulo}</span>
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
+  </section>
+</Base>

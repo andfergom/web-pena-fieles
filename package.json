@@ -1,0 +1,24 @@
+{
+  "name": "web-pena-fieles-al-balompie",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "wrangler pages dev dist",
+    "cms": "npx decap-server",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.5",
+    "@fontsource-variable/source-sans-3": "^5.3.1",
+    "@fontsource/im-fell-english-sc": "^5.3.0",
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.1",
+    "tailwindcss": "^4.3.5"
+  },
+  "devDependencies": {
+    "wrangler": "^4.156.0"
+  }
+}

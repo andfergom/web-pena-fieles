@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import FormularioContacto from '../components/FormularioContacto.astro';
+import pena from '../data/pena.json';
+---
+<Base title="Hazte socio" description="Hazte socio de la Peña Bética Fieles al Balompié.">
+  <PageHeader title="Hazte socio" intro="Súmate a la peña y vive el Betis en compañía." />
+  <section class="mx-auto max-w-6xl px-4 py-14 grid gap-12 md:grid-cols-[1fr_1.2fr]">
+    <div class="prosa">
+      <h2>Cómo funciona</h2>
+      <ol>
+        <li>Rellena el formulario con tus datos de contacto.</li>
+        <li>La secretaría de la peña te escribe para completar el alta y explicarte la cuota.</li>
+        <li>Firmas la ficha de socio en persona y ya eres de la peña.</li>
+      </ol>
+      <p>
+        <strong>Cuota:</strong> {pena.cuotaSocio || 'la cuota anual la aprueba la asamblea de socios; te la indicaremos al contactar contigo.'}
+      </p>
+      <p class="text-base text-tinta/70">
+        Por seguridad no pedimos DNI ni datos bancarios por internet. Esos datos se recogen al firmar la ficha de socio.
+      </p>
+    </div>
+    <div class="rounded-2xl bg-white p-6 md:p-8 shadow-sm ring-1 ring-verde/10">
+      <h2 class="text-2xl mb-6">Quiero ser socio</h2>
+      <FormularioContacto tipo="socio" boton="Enviar solicitud" />
+    </div>
+  </section>
+</Base>

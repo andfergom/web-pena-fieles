@@ -1,0 +1,24 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { fechaLarga } from '../../lib/fechas';
+
+export async function getStaticPaths() {
+  const noticias = await getCollection('noticias', ({ data }) => !data.borrador);
+  return noticias.map((noticia) => ({ params: { id: noticia.id }, props: { noticia } }));
+}
+
+const { noticia } = Astro.props;
+const { Content } = await render(noticia);
+---
+<Base title={noticia.data.titulo} description={noticia.data.resumen}>
+  <article class="mx-auto max-w-3xl px-4 py-14">
+    <a href="/noticias" class="font-semibold">← Noticias</a>
+    <p class="mt-6 text-sm text-tinta/60">{fechaLarga(noticia.data.fecha)}</p>
+    <h1 class="mt-2 text-4xl md:text-5xl leading-tight">{noticia.data.titulo}</h1>
+    {noticia.data.imagen && <img src={noticia.data.imagen} alt="" class="mt-8 w-full rounded-2xl" />}
+    <div class="prosa mt-6">
+      <Content />
+    </div>
+  </article>
+</Base>
