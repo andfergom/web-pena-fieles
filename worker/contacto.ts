@@ -1,5 +1,5 @@
 // Recibe los formularios de contacto y de alta de socio y los envía por correo con Resend.
-// Variables de entorno (Cloudflare Pages > Settings > Environment variables):
+// Variables de entorno (Cloudflare > Workers > web-pena-fieles > Settings > Variables and secrets):
 //   RESEND_API_KEY  clave de Resend
 //   MAIL_TO         buzón de la peña que recibe los formularios
 //   MAIL_FROM       remitente verificado en Resend, p. ej. "Web de la peña <web@fielesalbalompie.es>"
